@@ -8,11 +8,15 @@ package c169_gui;
 import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.Student;
+import view_controller.RosterOverviewController;
 
 /**
  *
@@ -54,6 +58,9 @@ public class MainApp extends Application {
             AnchorPane rosterOverview = (AnchorPane) loader.load();
             
             rootLayout.setCenter(rosterOverview);
+            
+            RosterOverviewController controller = loader.getController();
+            controller.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -67,4 +74,17 @@ public class MainApp extends Application {
         launch(args);
     }
     
+    private ObservableList<Student> studentData = FXCollections.observableArrayList();
+    
+    public MainApp() {
+        studentData.add(new Student("1", "John", "Smith", "jSmith@gmail.com", 20));
+        studentData.add(new Student("2", "Susan", "Erickson", "sErickson@gmail.com", 19));
+        studentData.add(new Student("3", "Jack", "Napoli", "jNapoli@gmail.com", 19));
+        studentData.add(new Student("4", "Erin", "Black", "eBlack@gmail.com", 22));
+        studentData.add(new Student("5", "Sinjin", "Cooper", "sCooper@gmail.com", 28));
+    }
+    
+    public ObservableList<Student> getStudentData() {
+        return studentData;
+    }
 }
