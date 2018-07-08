@@ -13,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import c169_gui.MainApp;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import model.Student;
 
 /**
@@ -51,13 +53,56 @@ public class RosterOverviewController {
      */
     @FXML
     private void initialize() {
-        firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
-        lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
+        firstNameColumn.setCellValueFactory(
+                cellData -> cellData.getValue().firstNameProperty());
+        lastNameColumn.setCellValueFactory(
+                cellData -> cellData.getValue().lastNameProperty());
+        
+        showStudentDetails(null);
+        
+        studentTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> showStudentDetails(newValue));
     }    
     
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
         
         studentTable.setItems(mainApp.getStudentData());
+    }
+    
+    private void showStudentDetails(Student student) {
+        if (student != null) {
+            idLabel.setText(student.getId());
+            firstNameLabel.setText(student.getFirstName());
+            lastNameLabel.setText(student.getLastName());
+            emailLabel.setText(student.getEmail());
+            ageLabel.setText(Integer.toString(student.getAge()));
+            //TODO convert grades arraylist into string.
+            //gradesLabel.setText(something something);
+        } else {
+            idLabel.setText("");
+            firstNameLabel.setText("");
+            lastNameLabel.setText("");
+            emailLabel.setText("");
+            ageLabel.setText("");
+            //gradesLabel.setText("");
+        }
+    }
+    
+    @FXML
+    private void handleDeleteStudent() {
+        int selectedIndex = studentTable.getSelectionModel().getSelectedIndex();
+        
+        if (selectedIndex >= 0) {
+        studentTable.getItems().remove(selectedIndex);
+        } else {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(mainApp.getPrimaryStage());
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Student Selected");
+            alert.setContentText("Please select a student in the table.");
+            
+            alert.showAndWait();
+        }
     }
 }
