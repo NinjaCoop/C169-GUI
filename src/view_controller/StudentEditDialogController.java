@@ -39,7 +39,6 @@ public class StudentEditDialogController {
     /**
      * Initializes the controller class.
      */
-    @FXML
     public void initialize() {
         // TODO
     }    
@@ -73,7 +72,7 @@ public class StudentEditDialogController {
             student.setFirstName(firstNameField.getText());
             student.setLastName(lastNameField.getText());
             student.setEmail(emailField.getText());
-            student.setAge(ageField.getText());
+            student.setAge(Integer.parseInt(ageField.getText()));
             //student.setGrades(gradesField.getText());
             
             okClicked = true;
@@ -82,6 +81,7 @@ public class StudentEditDialogController {
     }
     
     //Called when user clicks Cancel.
+    @FXML
     private void handleCancel() {
         dialogStage.close();
     }

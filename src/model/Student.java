@@ -22,8 +22,9 @@ public class Student {
     private final IntegerProperty age;
     //private final StringProperty grades;
     
-    /*public Student() {
-    }*/
+    public Student() {
+        this(null, null);
+    }
     
     public Student(String id, String firstName, String lastName, String email, int age) {
         this.id = new SimpleStringProperty(id);

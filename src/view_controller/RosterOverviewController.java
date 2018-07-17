@@ -105,4 +105,41 @@ public class RosterOverviewController {
             alert.showAndWait();
         }
     }
+    
+    /**
+     * Called when the user clicks the new button. Opens a dialog to edit
+     * details for a new Student.
+     */
+    @FXML
+    private void handleNewStudent() {
+        Student tempStudent = new Student();
+        boolean okClicked = mainApp.showStudentEditDialog(tempStudent);
+        if (okClicked) {
+            mainApp.getStudentData().add(tempStudent);
+        }
+    }
+    
+    /**
+     * Called when the user clicks the edit button. Opens a dialog to edit
+     * details for the selected student.
+     */
+    @FXML
+    private void handleEditStudent() {
+        Student selectedStudent = studentTable.getSelectionModel().getSelectedItem();
+        if (selectedStudent != null) {
+            boolean okClicked = mainApp.showStudentEditDialog(selectedStudent);
+            if (okClicked) {
+                showStudentDetails(selectedStudent);
+            }
+        } else {
+            // Nothing selected
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(mainApp.getPrimaryStage());
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Student Selected");
+            alert.setContentText("Please select a student in the table.");
+            
+            alert.showAndWait();
+        }
+    }
 }
